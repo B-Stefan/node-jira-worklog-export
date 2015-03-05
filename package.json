@@ -1,0 +1,23 @@
+{
+  "name": "node-jira-worklog-to-csv",
+  "version": "1.0.0",
+  "description": "Get all worklogs by user and date rage and save this as CSV file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/B-Stefan/node-jira-worklog-to-csv"
+  },
+  "author": "Stefan Bieliauskas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/B-Stefan/node-jira-worklog-to-csv/issues"
+  },
+  "homepage": "https://github.com/B-Stefan/node-jira-worklog-to-csv",
+  "dependencies": {
+    "fast-csv": "^0.5.7",
+    "jira": "git://github.com/B-Stefan/node-jira.git"
+  }
+}

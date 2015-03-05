@@ -1,0 +1,30 @@
+date,spentTime,comment
+27.02.2015,2h, - Fertigstellen des OffCanvasMenue CSS - Expander für Kategorien eingefügt 
+20.02.2015,4h, - Erweitern OAuthSchnittstelle für Client und Server - Clientseitig und Serverseitige autorisierung - Abtracte Rest API für den Webservice erstellt - Abstracte Model Service bassierend auf der Rest API erstellt - Testen der beidne Klassen. 
+20.02.2015,28m," - Einbauen der dynamisch gerenderten Kategorien für das offCanvasMenue - Fehler noch der Zugriff auf API, um diese dynamisch zu füllen."
+20.02.2015,1h 13m, - rewrite expander function because the template implementation not work
+20.02.2015,16m, - Add mobile menu click functions 
+20.02.2015,1h 30m, - Fix mobileMenue click events- Fix offCanvasMenue click events 
+20.02.2015,4h, - Erstellen des ersten Models (Artikel) - Erstellen des BaseModels - Testen der Autorisierung (expires_in Fehler behoben) - Artikelliste auf der Seite dynamisch aus der Datenbank gefüllt  
+20.02.2015,2h," - Suche nach Fehlerhaften initialisierung der Artikelliste --> Artikel blieben verschwunden - Template der Artikel-Preview so abgeändert, dass diese auch erscheinen"
+19.02.2015,1h, - Skype Telko am Donnerstag --> Vorbesprechung für Montag
+18.02.2015,4h 30m," - OAuth prozess im Client, sodass der Cleint einen SessionKey bekommt und diese zwischenspeichert. - Geteilte services für server und Client erstellt - Cookie für die OAuth informationen - Verschlüsselung des Cookie - Client Controller für Arikel angefangen "
+17.02.2015,1h," - Watch Task einrichtne - Nur 1h von egientlich 2,5h berechnet, da hier mehr Probleme aufgetreten sind als zunächst erwartet "
+10.02.2015,2h 30m," -> Angular-Application eingebunden -> Build-Test (ob auch minimierte Version der Seite funktioniert) -> Erweitern der Template-Engine Eigentlich 4 Stunden, jedoch aufgrund der Erweiterung der Template Engine und meiner habe ich einen Fehler 2 Stunden lang gesucht. Deswegen keine Brechung. "
+09.02.2015,1h, - Besprechung allgemeiner Stand - Planung kommende Woche - Planung langfristiger Projektplan 
+09.02.2015,2h 47m," - Import Template von Mirko (neue Version) --> Ausgleidern der Template-Dateien in eigenes Repro --> Update des Repro in das Try-On-Frontend - Erstellen der View Klassen --> LayoutBase  (Nur HTML Gerüst) --> LayoutDefault (Mit Nav und Footer, sodass hier nur der Content hinzugefügt werden muss) - Styles einbinden --> Styles korrigieren, da nicht korrektes CSS (Syntax-Fehler) --> Ausgliedern der Try-on.css in einzelne Module --> Nicht benötigte Styles des Templates entfernen - Nav überschrieben (für Try-On) --> Inhalt des Templates von Tim übernehmen - Suche nach Fehler beim Responsive-Nav (Fehler gefunden)--> Beim mobilen Nav wurden die Aktionen auf den Buttons nicht ausgeführt, Fehler gefunden und korrigiert. "
+30.01.2015,45m, - Besprechung aktueller Stand der Entwicklung - Analyse Script MagiceEdge für eventuelle Verwendung (Nur 45m da ich zu spät war) 
+29.01.2015,1h 33m, - Import der Fonts - Anpassen der relativen Pfade im Template - Einfügen der entsprechenden Routen im Server- Debug funktion für den Client eingebaut - Testen des Template bezüglich Responsive => Fehler in fast jeder Komponete festgestellt. 
+29.01.2015,15m, - Erstellend es Repro für die Tempalte-Dateien - Bower int - Einbinden des Temaplte in den Web-Client
+29.01.2015,2h 10m," - Add template files - Add function to render template with partial eg Header, Nav, PostList - Add some partial- Add CSS Files to main.scss"
+27.01.2015,10m," - Besprechung bezüglich Datenbankmodel. --> Artikel Aufteilung in 2 Tabellen: Artikel und Artikelvariante. --> Besprechung der Zuordnung von Import-ID's "
+25.01.2015,5h 11m, - Server / Client structure - create gruntfile.js - set up express - set up routes- configure sharing between server and client components - test performance - add index view 
+25.01.2015,11m, - Remove npm-debug.log file
+25.01.2015,30m, - Typescript-Server Konfuguration 
+21.01.2015,13m, 
+21.01.2015,10m, - Besprechung Exception-Handling mit Tobias und ilyas- Dokumentieren der Ergebnisse in Confluence 
+20.01.2015,1h," - Erstellen von Aufgaben fürs Frontend, - Projektplan aktualisiert "
+19.01.2015,45m," - Besprechung Datenbankstruktur -- Erstellen eines Datenbankdiagramms, siehe Confluence "
+19.01.2015,45m, - Besprechung Aufgabenverteilung - Grundsätzlicher Projektplan - Meilenstein für 30.01 festgelegt - Einführung Tools
+18.01.2015,15m," - Einrichtung GIT Repro, - Einrichtung Webstorm-Projekt "
+16.01.2015,1h 30m, Meeting mit allen Projektbeteiligten- Absprachen und Anforderungsanalyse. - Grundlagen für die Zusammenarbeit - Neues Meeting am Montag vereinbart 
