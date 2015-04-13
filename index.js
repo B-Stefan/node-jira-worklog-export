@@ -20,8 +20,8 @@ function JiraWorklogs(options) {
 
 
     this._allWorklogs = [];
-    this._from = options.from ? options.from :  new Date("01-01-2000");
-    this._to = options.to ? options.to :  new Date("01-01-2100");
+    this._from = options.from ? new Date(options.from) :  new Date("01-01-2000");
+    this._to = options.to ? new Date(options.to) :  new Date("01-01-2100");
     this._userName = options.userName ? options.userName :  null;
     this._projectKey = options.projectKey ? options.projectKey : null;
 
@@ -77,14 +77,16 @@ JiraWorklogs.prototype.handleIssue = function (issue) {
         });
         self._promiseCount--;
         if (self._promiseCount == 0) {
-            console.log("Run finished");
-            self._callback(self.getWorklogs());
+            var worklog = self.getWorklogs();
+
+            console.log("Run finished count:" + worklog.length);
+            self._callback();
         }
     })
 };
 
 JiraWorklogs.prototype.run = function (callback) {
-    console.log("Start export worklog for: " + this._userName + " \n Project: " + this._projectKey + " \n From: "  + this._from  + " \n To: "  + this._to)
+    console.log("Start export worklog for: " + this._userName + " \n Project: " + this._projectKey + " \n From: "  + this._from.toDateString("DD.MM.YYYY")  + " \n To: "  + this._to.toDateString("DD.MM.YYYY"))
     this._callback = callback;
     var self = this;
     this._jira.searchJira("project=" + this._projectKey, {maxResults: 10000}, function (err, result) {
