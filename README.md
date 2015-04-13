@@ -1,4 +1,4 @@
-# node-jira-worklog-to-csv
+# node-jira-worklog-export
 Get all worklogs by user and date rage and export this data to json or excel file 
 
 #Use
