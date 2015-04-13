@@ -8,7 +8,7 @@ Get all worklogs by user and date rage and export this data to json or excel fil
 
 ```javascript 
 
-    var JiraWorklog = require("./index");
+    var JiraWorklog = require("node-jira-worklog-export");
     
     var options = {
         host:  'jira.example.de',
