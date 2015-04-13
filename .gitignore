@@ -7,3 +7,5 @@ node_modules
 tryon.js
 yourData.json
 yourData.xlsx
+exportedData.xlsx
+exportedData.json
