@@ -1,7 +1,7 @@
 {
   "name": "node-jira-worklog-export",
   "version": "1.0.0",
-  "description": "Get all worklogs by user and date rage and save this as CSV file",
+  "description": "Get all worklogs by user and date rage and export this to json and excel",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
