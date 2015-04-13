@@ -1,23 +1,24 @@
 {
-  "name": "node-jira-worklog-to-csv",
+  "name": "node-jira-worklog-export",
   "version": "1.0.0",
   "description": "Get all worklogs by user and date rage and save this as CSV file",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/B-Stefan/node-jira-worklog-to-csv"
+    "url": "https://github.com/B-Stefan/node-jira-worklog-export"
   },
   "author": "Stefan Bieliauskas",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/B-Stefan/node-jira-worklog-to-csv/issues"
+    "url": "https://github.com/B-Stefan/node-jira-worklog-export/issues"
   },
-  "homepage": "https://github.com/B-Stefan/node-jira-worklog-to-csv",
+  "homepage": "https://github.com/B-Stefan/node-jira-worklog-export",
   "dependencies": {
-    "fast-csv": "^0.5.7",
-    "jira": "git://github.com/B-Stefan/node-jira.git"
+    "jira": "git://github.com/B-Stefan/node-jira.git",
+    "msexcel-builder": "0.0.2"
   }
 }

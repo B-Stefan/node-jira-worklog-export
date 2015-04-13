@@ -4,3 +4,6 @@ atlassian-ide-plugin.xml
 .node_modules
 node_modules
 .DS_Store
+tryon.js
+yourData.json
+yourData.xlsx

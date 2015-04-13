@@ -1,30 +1,34 @@
-JiraApi = require('jira').JiraApi;
-csv = require('fast-csv');
-fs = require('fs');
+var JiraApi = require('jira').JiraApi;
+var excelbuilder = require('msexcel-builder');
+
+
 function addLeadingZeros(number, length) {
     var num = '' + number;
     while (num.length < length) num = '0' + num;
     return num;
 }
 
-function JiraWorklogs(connectionOptions, projectKey, from, to, userName) {
+function JiraWorklogs(options) {
+
+    var options = options ? options : {};
+    options.protocol = options.protocol ? options.protocol : 'http';
+    options.host = options.host ? options.host : 'localhost';
+    options.port = options.port ? options.port : 80;
+    options.userName = options.userName ? options.userName : '';
+    options.password = options.password ? options.password : '';
+    options.apiVersion = options.apiVersion ? options.apiVersion : 2;
+
+
     this._allWorklogs = [];
-    this._from = from;
-    this._to = to;
-    this._userName = userName;
-    this._projectKey = projectKey;
+    this._from = options.from ? options.from :  new Date("01-01-2000");
+    this._to = options.to ? options.to :  new Date("01-01-2100");
+    this._userName = options.userName ? options.userName :  null;
+    this._projectKey = options.projectKey ? options.projectKey : null;
+
+
     this._promiseCount = 0;
-
-    var connectionOptions = connectionOptions ? connectionOptions : {};
-    connectionOptions.protocol = connectionOptions.protocol ? connectionOptions.protocol : 'http';
-    connectionOptions.host = connectionOptions.host ? connectionOptions.host : 'localhost';
-    connectionOptions.port = connectionOptions.port ? connectionOptions.port : 80;
-    connectionOptions.userName = connectionOptions.userName ? connectionOptions.userName : '';
-    connectionOptions.password = connectionOptions.password ? connectionOptions.password : '';
-    connectionOptions.apiVersion = connectionOptions.apiVersion ? connectionOptions.apiVersion : 2;
-
-
-    this._jira = new JiraApi(connectionOptions.protocol, connectionOptions.host, connectionOptions.port, connectionOptions.userName, connectionOptions.password, connectionOptions.apiVersion);
+    this._jira = new JiraApi(options.protocol, options.host, options.port, options.userName, options.password, options.apiVersion);
+    return this;
 }
 
 
@@ -34,7 +38,13 @@ JiraWorklogs.prototype.checkDate = function (date) {
 JiraWorklogs.prototype.checkUser = function (creator) {
     return creator.key == this._userName;
 };
+JiraWorklogs.prototype.getFrom = function(){
+    return this._from;
+};
 
+JiraWorklogs.prototype.getTo = function(){
+    return this._to;
+};
 JiraWorklogs.prototype.getWorklogs = function () {
     return this._allWorklogs.sort(function (a, b) {
         a = a.started;
@@ -67,12 +77,14 @@ JiraWorklogs.prototype.handleIssue = function (issue) {
         });
         self._promiseCount--;
         if (self._promiseCount == 0) {
+            console.log("Run finished");
             self._callback(self.getWorklogs());
         }
     })
 };
 
 JiraWorklogs.prototype.run = function (callback) {
+    console.log("Start export worklog for: " + this._userName + " \n Project: " + this._projectKey + " \n From: "  + this._from  + " \n To: "  + this._to)
     this._callback = callback;
     var self = this;
     this._jira.searchJira("project=" + this._projectKey, {maxResults: 10000}, function (err, result) {
@@ -89,50 +101,85 @@ JiraWorklogs.prototype.run = function (callback) {
 };
 
 
-JiraWorklogs.prototype.writeCSV = function(filename, callback){
-    var csvStream = csv.createWriteStream({headers: true}),
-        writableStream = fs.createWriteStream(filename+".csv");
+JiraWorklogs.prototype.writeXLSX = function(filename, callback){
 
-    writableStream.on("finish", function(){
+    // Create a new workbook file in current working-path
+    var workbook = excelbuilder.createWorkbook('./', filename + '.xlsx')
 
-        callback('Done');
-    });
+    // Create a new worksheet with 10 columns and 12 rows
+    var sheet1 = workbook.createSheet('sheet1', 100, 300);
 
-    csvStream.pipe(writableStream);
-
+    // Fill some data
+    sheet1.set(1, 1, 'Date');
+    sheet1.set(2, 1, 'Time');
+    sheet1.set(3, 1, 'Comment');
+    sheet1.width(3,100);
+    var i = 2;
     this.getWorklogs().map(function(item){
-
-        var comment = item.comment ? item.comment : '';
-        comment = comment.replace( new RegExp('\n', 'g'),'');
-        comment = comment.replace( new RegExp('\r', 'g'),'');
-
         var date = addLeadingZeros(item.started.getDate(),2) + "." + addLeadingZeros((item.started.getMonth()+1),2)  + "." + item.started.getFullYear();
-        csvStream.write(
-                        {
-                            date: date,
-                            spentTime: item.timeSpent,
-                            comment: ' ' +comment
-                        }
-                        );
+        sheet1.set( 1,i, date);
+        sheet1.set( 2,i, item.timeSpent);
+        sheet1.wrap(3, i, 'true');
+        sheet1.set( 3,i, item.comment);
+        sheet1.set( 4,i, item.self);
+
+        i++;
     });
-    csvStream.end();
 
-}
+    // Save it
+    workbook.save(function(err){
+        if (err){
+            workbook.cancel();
+            callback(err, "Some error")
+        }
+        else{
+            callback(null,"Worklog saved to " + filename + ".xlsx");
+        }
 
-var instance = new JiraWorklogs({
-    host:  process.env.jiraHost,
-    userName: process.env.jiraUserName,
-    password: process.env.jiraUserPassword
-}, process.env.jiraProjectKey,
-    new Date("01-01-2015"),
-    new Date("02-28-2015"),
-    process.env.jiraUserName);
+    });
 
 
-instance.run(function(){
-    console.log("Load finished");
-    instance.writeCSV('test', function(){
-        console.log(arguments)
-    })
-});
+};
+JiraWorklogs.prototype.writeJSON = function(filename,callback){
+    var fs = require('fs');
+    var outputFilename = filename + '.json';
 
+    fs.writeFile(outputFilename, JSON.stringify(this.getWorklogs(), null, 4), function(err) {
+        if(err) {
+            callback(err);
+        } else {
+            callback(null,"Worklog saved to " + outputFilename );
+        }
+    });
+};
+
+
+JiraWorklogs.runWithEnvVars = function(){
+
+    if(typeof process.env.jiraHost == 'undefined'){
+        return;
+    }
+    var instance = new JiraWorklogs({
+        host:  process.env.host,
+        userName: process.env.userName,
+        password: process.env.password,
+        projectKey: process.env.projectKey,
+        from: process.env.from,
+        to: process.env.to
+    });
+
+
+    instance.run(function(){
+        instance.writeXLSX('exportedData', function(){
+            console.log(arguments)
+        });
+
+        instance.writeJSON('exportedData',function(){
+            console.log(arguments)
+        })
+    });
+};
+
+
+module.exports = JiraWorklogs;
+//JiraWorklogs.runWithEnvVars();
